@@ -19,9 +19,14 @@ public class GigaGal {
 
     private Vector2 position;
 
+    private enum Facing {LEFT, RIGHT};
+
+    Facing facing;
+
     public GigaGal() {
 
         position = new Vector2(20, Constants.GIGAGAL_EYE_HEIGHT);
+        facing = Facing.RIGHT;
 
     }
 
@@ -40,30 +45,34 @@ public class GigaGal {
     private void moveLeft(float delta) {
 
         position.x -= delta * Constants.GIGAGAL_SPEED;
+        facing = Facing.LEFT;
 
     }
 
     private void moveRight(float delta) {
 
         position.x += delta * Constants.GIGAGAL_SPEED;
+        facing = Facing.RIGHT;
 
     }
 
     public void render(SpriteBatch batch) {
 
-        TextureRegion standingRight = Assets.instance.gigaGalAssets.standingRight;
+        TextureRegion player;
+        if (facing == Facing.RIGHT) player = Assets.instance.gigaGalAssets.standingRight;
+        else player = Assets.instance.gigaGalAssets.standingLeft;
 
-        batch.draw(standingRight.getTexture(),
+        batch.draw(player.getTexture(),
                 position.x - Constants.GIGAGAL_EYE_POSITION.x,
                 position.y - Constants.GIGAGAL_EYE_POSITION.y,
                 0, 0,
-                standingRight.getRegionWidth(),
-                standingRight.getRegionHeight(),
+                player.getRegionWidth(),
+                player.getRegionHeight(),
                 1,1,0,
-                standingRight.getRegionX(),
-                standingRight.getRegionY(),
-                standingRight.getRegionWidth(),
-                standingRight.getRegionHeight(),
+                player.getRegionX(),
+                player.getRegionY(),
+                player.getRegionWidth(),
+                player.getRegionHeight(),
                 false, false);
 
     }

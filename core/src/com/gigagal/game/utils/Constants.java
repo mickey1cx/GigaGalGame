@@ -17,6 +17,7 @@ public class Constants {
     public static final String TEXTURE_ATLAS = "images/gigagal.pack.atlas";
 
     public static final String STANDING_RIGHT = "standing-right";
+    public static final String STANDING_LEFT = "standing-left";
 
     public static final Vector2 GIGAGAL_EYE_POSITION = new Vector2(16, 24);
 
