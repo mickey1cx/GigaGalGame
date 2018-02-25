@@ -20,6 +20,8 @@ public class Constants {
     public static final String STANDING_LEFT = "standing-left";
     public static final String JUMPING_RIGHT = "jumping-right";
     public static final String JUMPING_LEFT = "jumping-left";
+    public static final String WALK_2_RIGHT = "walk-2-right";
+    public static final String WALK_2_LEFT = "walk-2-left";
 
     public static final Vector2 GIGAGAL_EYE_POSITION = new Vector2(16, 24);
 

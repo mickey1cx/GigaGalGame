@@ -23,6 +23,7 @@ public class GigaGal {
 
     Facing facing;
     JumpState jumpState;
+    WalkState walkState;
     Long jumpStartTime;
 
     public GigaGal() {
@@ -30,6 +31,7 @@ public class GigaGal {
         position = new Vector2(20, Constants.GIGAGAL_EYE_HEIGHT);
         facing = Facing.RIGHT;
         jumpState = JumpState.FALLING;
+        walkState = WalkState.STANDING;
         velocity = new Vector2(0, 0);
 
     }
@@ -57,6 +59,8 @@ public class GigaGal {
             moveLeft(delta);
         } else if (input.isKeyPressed(Keys.RIGHT)) {
             moveRight(delta);
+        } else {
+            walkState = WalkState.STANDING;
         }
 
         if (input.isKeyPressed(Keys.Z)) {
@@ -112,6 +116,7 @@ public class GigaGal {
 
         position.x -= delta * Constants.GIGAGAL_SPEED;
         facing = Facing.LEFT;
+        walkState = walkState.WALKING;
 
     }
 
@@ -119,6 +124,7 @@ public class GigaGal {
 
         position.x += delta * Constants.GIGAGAL_SPEED;
         facing = Facing.RIGHT;
+        walkState = walkState.WALKING;
 
     }
 
@@ -128,12 +134,16 @@ public class GigaGal {
         if (facing == Facing.RIGHT) {
             player = (jumpState != JumpState.GROUNDED)
                     ? Assets.instance.gigaGalAssets.jumpingRight
-                    : Assets.instance.gigaGalAssets.standingRight;
+                    : (walkState == WalkState.STANDING)
+                    ? Assets.instance.gigaGalAssets.standingRight
+                    : Assets.instance.gigaGalAssets.walkingRight;
         }
         else {
             player = (jumpState != JumpState.GROUNDED)
                     ? Assets.instance.gigaGalAssets.jumpingLeft
-                    : Assets.instance.gigaGalAssets.standingLeft;
+                    : (walkState == WalkState.STANDING)
+                    ? Assets.instance.gigaGalAssets.standingLeft
+                    : Assets.instance.gigaGalAssets.walkingLeft;
         }
 
         batch.draw(player.getTexture(),
@@ -153,4 +163,5 @@ public class GigaGal {
 
     private enum Facing {LEFT, RIGHT};
     private enum JumpState {JUMPING, FALLING, GROUNDED};
+    private enum WalkState {STANDING, WALKING};
 }
