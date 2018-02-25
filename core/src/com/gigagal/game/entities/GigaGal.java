@@ -1,5 +1,8 @@
 package com.gigagal.game.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -14,7 +17,7 @@ public class GigaGal {
 
     public final static String TAG = GigaGal.class.getName();
 
-    Vector2 position;
+    private Vector2 position;
 
     public GigaGal() {
 
@@ -23,6 +26,26 @@ public class GigaGal {
     }
 
     public void update(float delta) {
+
+        Input input = Gdx.input;
+
+        if (input.isKeyPressed(Keys.LEFT)) {
+            moveLeft(delta);
+        } else if (input.isKeyPressed(Keys.RIGHT)) {
+            moveRight(delta);
+        }
+
+    }
+
+    private void moveLeft(float delta) {
+
+        position.x -= delta * Constants.GIGAGAL_SPEED;
+
+    }
+
+    private void moveRight(float delta) {
+
+        position.x += delta * Constants.GIGAGAL_SPEED;
 
     }
 
