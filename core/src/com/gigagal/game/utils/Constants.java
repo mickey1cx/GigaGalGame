@@ -20,8 +20,14 @@ public class Constants {
     public static final String STANDING_LEFT = "standing-left";
     public static final String JUMPING_RIGHT = "jumping-right";
     public static final String JUMPING_LEFT = "jumping-left";
+
+    public static final String WALK_1_RIGHT = "walk-1-right";
     public static final String WALK_2_RIGHT = "walk-2-right";
+    public static final String WALK_3_RIGHT = "walk-3-right";
+    public static final String WALK_1_LEFT = "walk-1-left";
     public static final String WALK_2_LEFT = "walk-2-left";
+    public static final String WALK_3_LEFT = "walk-3-left";
+    public static final float GIGAGAL_WALK_DURATION = 0.25f;
 
     public static final Vector2 GIGAGAL_EYE_POSITION = new Vector2(16, 24);
 

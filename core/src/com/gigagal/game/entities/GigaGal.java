@@ -25,6 +25,7 @@ public class GigaGal {
     JumpState jumpState;
     WalkState walkState;
     Long jumpStartTime;
+    Long walkStartTime;
 
     public GigaGal() {
 
@@ -114,6 +115,8 @@ public class GigaGal {
 
     private void moveLeft(float delta) {
 
+        if (jumpState == JumpState.GROUNDED && walkState != WalkState.WALKING) walkStartTime = TimeUtils.nanoTime();
+
         position.x -= delta * Constants.GIGAGAL_SPEED;
         facing = Facing.LEFT;
         walkState = walkState.WALKING;
@@ -121,6 +124,8 @@ public class GigaGal {
     }
 
     private void moveRight(float delta) {
+
+        if (jumpState == JumpState.GROUNDED && walkState != WalkState.WALKING) walkStartTime = TimeUtils.nanoTime();
 
         position.x += delta * Constants.GIGAGAL_SPEED;
         facing = Facing.RIGHT;
@@ -131,19 +136,26 @@ public class GigaGal {
     public void render(SpriteBatch batch) {
 
         TextureRegion player;
+
+        float walkTime = 0;
+
+        if (jumpState == JumpState.GROUNDED && walkState == WalkState.WALKING) {
+            walkTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - walkStartTime);
+        }
+
         if (facing == Facing.RIGHT) {
             player = (jumpState != JumpState.GROUNDED)
                     ? Assets.instance.gigaGalAssets.jumpingRight
                     : (walkState == WalkState.STANDING)
                     ? Assets.instance.gigaGalAssets.standingRight
-                    : Assets.instance.gigaGalAssets.walkingRight;
+                    : Assets.instance.gigaGalAssets.walkingRightAnimation.getKeyFrame(walkTime);
         }
         else {
             player = (jumpState != JumpState.GROUNDED)
                     ? Assets.instance.gigaGalAssets.jumpingLeft
                     : (walkState == WalkState.STANDING)
                     ? Assets.instance.gigaGalAssets.standingLeft
-                    : Assets.instance.gigaGalAssets.walkingLeft;
+                    : Assets.instance.gigaGalAssets.walkingLeftAnimation.getKeyFrame(walkTime);
         }
 
         batch.draw(player.getTexture(),
