@@ -22,6 +22,8 @@ public class GameplayScreen extends ScreenAdapter {
     SpriteBatch batch;
     ExtendViewport viewport;
 
+    Level level;
+
     @Override
     public void show() {
 
@@ -30,6 +32,8 @@ public class GameplayScreen extends ScreenAdapter {
         batch = new SpriteBatch();
 
         viewport = new ExtendViewport(Constants.WORLD_SIZE, Constants.WORLD_SIZE);
+
+        level = new Level();
 
     }
 
@@ -51,6 +55,8 @@ public class GameplayScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
+        level.update(delta);
+
         viewport.apply();
 
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOR.r, Constants.BACKGROUND_COLOR.g, Constants.BACKGROUND_COLOR.b, Constants.BACKGROUND_COLOR.a);
@@ -60,10 +66,7 @@ public class GameplayScreen extends ScreenAdapter {
 
         batch.begin();
 
-        TextureRegion standingRight = Assets.instance.gigaGalAssets.standingRight;
-
-        batch.draw(standingRight.getTexture(), 0,0, 0, 0, standingRight.getRegionWidth(), standingRight.getRegionHeight(),1,1,0,
-                standingRight.getRegionX(), standingRight.getRegionY(), standingRight.getRegionWidth(), standingRight.getRegionHeight(), false, false);
+        level.render(batch);
 
         batch.end();
 
