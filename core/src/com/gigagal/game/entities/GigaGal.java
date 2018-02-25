@@ -79,7 +79,9 @@ public class GigaGal {
 
     private void endJump() {
 
-        jumpState = JumpState.FALLING;
+        if (jumpState == JumpState.JUMPING) {
+            jumpState = JumpState.FALLING;
+        }
 
     }
 
@@ -123,8 +125,16 @@ public class GigaGal {
     public void render(SpriteBatch batch) {
 
         TextureRegion player;
-        if (facing == Facing.RIGHT) player = Assets.instance.gigaGalAssets.standingRight;
-        else player = Assets.instance.gigaGalAssets.standingLeft;
+        if (facing == Facing.RIGHT) {
+            player = (jumpState != JumpState.GROUNDED)
+                    ? Assets.instance.gigaGalAssets.jumpingRight
+                    : Assets.instance.gigaGalAssets.standingRight;
+        }
+        else {
+            player = (jumpState != JumpState.GROUNDED)
+                    ? Assets.instance.gigaGalAssets.jumpingLeft
+                    : Assets.instance.gigaGalAssets.standingLeft;
+        }
 
         batch.draw(player.getTexture(),
                 position.x - Constants.GIGAGAL_EYE_POSITION.x,
@@ -140,7 +150,6 @@ public class GigaGal {
                 false, false);
 
     }
-
 
     private enum Facing {LEFT, RIGHT};
     private enum JumpState {JUMPING, FALLING, GROUNDED};
