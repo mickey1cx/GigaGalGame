@@ -39,4 +39,7 @@ public class Constants {
 
     public static final float GRAVITY = 1000.0f;
 
+    public static final String PLATFORM = "platform";
+    public static final int PLATFORM_EDGE = 8;
+
 }
