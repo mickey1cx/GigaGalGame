@@ -22,6 +22,7 @@ public class Level {
 
         platforms.add(new Platform(70, 30, 20, 20));
         platforms.add(new Platform(30, 60, 40, 20));
+        platforms.add(new Platform(100, 40, 30, 11));
 
     }
 
