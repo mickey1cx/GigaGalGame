@@ -31,11 +31,13 @@ public class Constants {
 
     public static final Vector2 GIGAGAL_EYE_POSITION = new Vector2(16, 24);
 
-    public static final float GIGAGAL_EYE_HEIGHT = 16.0f;
+    public static final float GIGAGAL_EYE_HEIGHT = 15.0f;
 
     public static final float GIGAGAL_SPEED = 64;
     public static final float GIGAGAL_JUMP_SPEED = 128;
-    public static final float GIGAGAL_JUMP_DURATION = 0.15f;
+    public static final float GIGAGAL_JUMP_DURATION = 0.3f;
+
+    public static final float GIGAGAL_STANCE_WIDTH = 6.0f;
 
     public static final float GRAVITY = 1000.0f;
 

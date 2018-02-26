@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.gigagal.game.Level;
 import com.gigagal.game.utils.Assets;
 import com.gigagal.game.utils.Constants;
 
@@ -19,7 +20,7 @@ public class GigaGal {
 
     public final static String TAG = GigaGal.class.getName();
 
-    private Vector2 position, velocity;
+    private Vector2 position, velocity, lastPosition;
 
     Facing facing;
     JumpState jumpState;
@@ -27,17 +28,24 @@ public class GigaGal {
     Long jumpStartTime;
     Long walkStartTime;
 
-    public GigaGal() {
+    Level level;
+
+    public GigaGal(Level level) {
+
+        this.level = level;
 
         position = new Vector2(20, Constants.GIGAGAL_EYE_HEIGHT);
         facing = Facing.RIGHT;
         jumpState = JumpState.FALLING;
         walkState = WalkState.STANDING;
-        velocity = new Vector2(0, 0);
+        velocity = new Vector2();
+        lastPosition = new Vector2(position);
 
     }
 
     public void update(float delta) {
+
+        lastPosition.set(position);
 
         velocity.y -= delta * Constants.GRAVITY;
         position.mulAdd(velocity, delta);
@@ -50,6 +58,17 @@ public class GigaGal {
                 jumpState = JumpState.GROUNDED;
                 position.y = Constants.GIGAGAL_EYE_HEIGHT;
                 velocity.y = 0;
+            } else {
+
+                for (Platform platform : level.getPlatforms()) {
+                    if (landedOnPlatform(platform)) {
+                        jumpState = JumpState.GROUNDED;
+                        velocity.y = 0;
+                        position.y = platform.top + Constants.GIGAGAL_EYE_HEIGHT;
+                        break;
+                    }
+                }
+
             }
 
         }
@@ -79,6 +98,28 @@ public class GigaGal {
         } else {
             endJump();
         }
+
+    }
+
+    private boolean landedOnPlatform(Platform platform) {
+
+        boolean leftFootIn = false;
+        boolean rightFootIn = false;
+        boolean straddle = false;
+
+        if (lastPosition.y - Constants.GIGAGAL_EYE_HEIGHT >= platform.top
+                && position.y - Constants.GIGAGAL_EYE_HEIGHT < platform.top) {
+
+            float leftFoot = position.x - Constants.GIGAGAL_STANCE_WIDTH / 2;
+            float rightFoot = position.x + Constants.GIGAGAL_STANCE_WIDTH / 2;
+
+            leftFootIn = (platform.left < leftFoot && platform.right > leftFoot);
+            rightFootIn = (platform.left < rightFoot && platform.right > rightFoot);
+
+            straddle = (platform.left > leftFoot && platform.right < rightFoot);
+        }
+
+        return leftFootIn || rightFootIn || straddle;
 
     }
 
