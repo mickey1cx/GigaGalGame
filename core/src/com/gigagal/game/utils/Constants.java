@@ -14,6 +14,8 @@ public class Constants {
 
     public static final float WORLD_SIZE = 128.0f;
 
+    public static final float KILL_HEIGHT = -100.0f;
+
     public static final String TEXTURE_ATLAS = "images/gigagal.pack.atlas";
 
     public static final String STANDING_RIGHT = "standing-right";
@@ -43,5 +45,7 @@ public class Constants {
 
     public static final String PLATFORM = "platform";
     public static final int PLATFORM_EDGE = 8;
+
+    public static final float CHASE_CAM_SPEED = 100.0f;
 
 }

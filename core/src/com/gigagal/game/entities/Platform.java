@@ -30,7 +30,7 @@ public class Platform {
         float width = right - left;
         float height = top - bottom;
 
-        platform.draw(batch, left, bottom, width, height);
+        platform.draw(batch, left - 1, bottom - 1, width + 2, height + 2);
 
     }
 

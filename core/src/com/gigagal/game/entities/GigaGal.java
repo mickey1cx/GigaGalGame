@@ -28,13 +28,22 @@ public class GigaGal {
     private Long jumpStartTime;
     private Long walkStartTime;
 
-    Level level;
+    private Level level;
 
-    public GigaGal(Level level) {
+    private Vector2 startPosition;
+
+    public GigaGal(Level level, Vector2 startPosition) {
 
         this.level = level;
+        this.startPosition = startPosition;
 
-        position = new Vector2(20, Constants.GIGAGAL_EYE_HEIGHT);
+        init();
+
+    }
+
+    private void init() {
+
+        position = new Vector2(startPosition);
         facing = Facing.RIGHT;
         jumpState = JumpState.FALLING;
         walkState = WalkState.STANDING;
@@ -47,6 +56,10 @@ public class GigaGal {
 
         lastPosition.set(position);
 
+        if (position.y < Constants.KILL_HEIGHT) {
+            init();
+        }
+
         velocity.y -= delta * Constants.GRAVITY;
         position.mulAdd(velocity, delta);
 
@@ -55,9 +68,9 @@ public class GigaGal {
             jumpState = JumpState.FALLING;
 
             if (position.y - Constants.GIGAGAL_EYE_HEIGHT < 0) {
-                jumpState = JumpState.GROUNDED;
-                position.y = Constants.GIGAGAL_EYE_HEIGHT;
-                velocity.y = 0;
+//                jumpState = JumpState.GROUNDED;
+//                position.y = Constants.GIGAGAL_EYE_HEIGHT;
+//                velocity.y = 0;
             } else {
 
                 for (Platform platform : level.getPlatforms()) {

@@ -1,6 +1,7 @@
 package com.gigagal.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.gigagal.game.entities.GigaGal;
 import com.gigagal.game.entities.Platform;
@@ -14,15 +15,28 @@ public class Level {
     private GigaGal gigaGal;
     private Array<Platform> platforms;
 
-
     public Level() {
 
-        gigaGal = new GigaGal(this);
         platforms = new Array<Platform>();
 
-        platforms.add(new Platform(70, 30, 20, 20));
-        platforms.add(new Platform(30, 60, 40, 20));
-        platforms.add(new Platform(100, 40, 30, 11));
+        initDebugLevel();
+
+    }
+
+    private void initDebugLevel() {
+
+        platforms.add(new Platform(15, 100, 30, 20));
+        platforms.add(new Platform(75, 90, 100, 65));
+        platforms.add(new Platform(35, 55, 50, 20));
+        platforms.add(new Platform(10, 20, 20, 9));
+        platforms.add(new Platform(100, 110, 30, 9));
+        platforms.add(new Platform(200, 130, 30, 40));
+        platforms.add(new Platform(150, 150, 30, 9));
+        platforms.add(new Platform(150, 180, 30, 9));
+        platforms.add(new Platform(200, 200, 9, 9));
+        platforms.add(new Platform(280, 100, 30, 9));
+
+        gigaGal = new GigaGal(this, new Vector2(15, 40));
 
     }
 
@@ -49,4 +63,5 @@ public class Level {
     public Array<Platform> getPlatforms() {
         return platforms;
     }
+
 }

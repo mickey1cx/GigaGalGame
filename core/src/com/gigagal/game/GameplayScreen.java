@@ -62,7 +62,7 @@ public class GameplayScreen extends ScreenAdapter {
 
         level.update(delta);
 
-        cam.update();
+        cam.update(delta);
 
         viewport.apply();
 
