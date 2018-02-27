@@ -12,7 +12,7 @@ import com.gigagal.game.entities.Platform;
 public class Level {
 
     private GigaGal gigaGal;
-    public Array<Platform> platforms;
+    private Array<Platform> platforms;
 
 
     public Level() {
@@ -40,6 +40,10 @@ public class Level {
 
         gigaGal.render(batch);
 
+    }
+
+    public GigaGal getGigaGal() {
+        return gigaGal;
     }
 
     public Array<Platform> getPlatforms() {

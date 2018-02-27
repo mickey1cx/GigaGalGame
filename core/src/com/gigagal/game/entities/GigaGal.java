@@ -22,11 +22,11 @@ public class GigaGal {
 
     private Vector2 position, velocity, lastPosition;
 
-    Facing facing;
-    JumpState jumpState;
-    WalkState walkState;
-    Long jumpStartTime;
-    Long walkStartTime;
+    private Facing facing;
+    private JumpState jumpState;
+    private WalkState walkState;
+    private Long jumpStartTime;
+    private Long walkStartTime;
 
     Level level;
 
@@ -160,7 +160,7 @@ public class GigaGal {
 
         position.x -= delta * Constants.GIGAGAL_SPEED;
         facing = Facing.LEFT;
-        walkState = walkState.WALKING;
+        walkState = WalkState.WALKING;
 
     }
 
@@ -170,7 +170,7 @@ public class GigaGal {
 
         position.x += delta * Constants.GIGAGAL_SPEED;
         facing = Facing.RIGHT;
-        walkState = walkState.WALKING;
+        walkState = WalkState.WALKING;
 
     }
 
@@ -214,7 +214,11 @@ public class GigaGal {
 
     }
 
-    private enum Facing {LEFT, RIGHT};
-    private enum JumpState {JUMPING, FALLING, GROUNDED};
-    private enum WalkState {STANDING, WALKING};
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    private enum Facing {LEFT, RIGHT}
+    private enum JumpState {JUMPING, FALLING, GROUNDED}
+    private enum WalkState {STANDING, WALKING}
 }

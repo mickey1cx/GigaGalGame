@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gigagal.game.utils.Assets;
+import com.gigagal.game.utils.ChaseCam;
 import com.gigagal.game.utils.Constants;
 
 /**
@@ -19,10 +20,12 @@ public class GameplayScreen extends ScreenAdapter {
 
     public static final String TAG = GameplayScreen.class.getName();
 
-    SpriteBatch batch;
-    ExtendViewport viewport;
+    private SpriteBatch batch;
+    private ExtendViewport viewport;
 
-    Level level;
+    private Level level;
+
+    private ChaseCam cam;
 
     @Override
     public void show() {
@@ -34,6 +37,8 @@ public class GameplayScreen extends ScreenAdapter {
         viewport = new ExtendViewport(Constants.WORLD_SIZE, Constants.WORLD_SIZE);
 
         level = new Level();
+
+        cam = new ChaseCam(viewport.getCamera(), level.getGigaGal());
 
     }
 
@@ -56,6 +61,8 @@ public class GameplayScreen extends ScreenAdapter {
     public void render(float delta) {
 
         level.update(delta);
+
+        cam.update();
 
         viewport.apply();
 
