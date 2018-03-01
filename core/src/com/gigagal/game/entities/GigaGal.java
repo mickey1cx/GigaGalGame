@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.gigagal.game.Level;
 import com.gigagal.game.utils.Assets;
 import com.gigagal.game.utils.Constants;
+import com.gigagal.game.utils.Enums.Direction;
+import com.gigagal.game.utils.Enums.JumpState;
+import com.gigagal.game.utils.Enums.WalkState;
 
 /**
  * Created by mickey.1cx on 25.02.2018.
@@ -22,7 +25,7 @@ public class GigaGal {
 
     private Vector2 position, velocity, lastPosition;
 
-    private Facing facing;
+    private Direction direction;
     private JumpState jumpState;
     private WalkState walkState;
     private Long jumpStartTime;
@@ -44,7 +47,7 @@ public class GigaGal {
     private void init() {
 
         position = new Vector2(startPosition);
-        facing = Facing.RIGHT;
+        direction = Direction.RIGHT;
         jumpState = JumpState.FALLING;
         walkState = WalkState.STANDING;
         velocity = new Vector2();
@@ -172,7 +175,7 @@ public class GigaGal {
         if (jumpState == JumpState.GROUNDED && walkState != WalkState.WALKING) walkStartTime = TimeUtils.nanoTime();
 
         position.x -= delta * Constants.GIGAGAL_SPEED;
-        facing = Facing.LEFT;
+        direction = Direction.LEFT;
         walkState = WalkState.WALKING;
 
     }
@@ -182,7 +185,7 @@ public class GigaGal {
         if (jumpState == JumpState.GROUNDED && walkState != WalkState.WALKING) walkStartTime = TimeUtils.nanoTime();
 
         position.x += delta * Constants.GIGAGAL_SPEED;
-        facing = Facing.RIGHT;
+        direction = Direction.RIGHT;
         walkState = WalkState.WALKING;
 
     }
@@ -197,7 +200,7 @@ public class GigaGal {
             walkTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - walkStartTime);
         }
 
-        if (facing == Facing.RIGHT) {
+        if (direction == Direction.RIGHT) {
             player = (jumpState != JumpState.GROUNDED)
                     ? Assets.instance.gigaGalAssets.jumpingRight
                     : (walkState == WalkState.STANDING)
@@ -231,7 +234,4 @@ public class GigaGal {
         return position;
     }
 
-    private enum Facing {LEFT, RIGHT}
-    private enum JumpState {JUMPING, FALLING, GROUNDED}
-    private enum WalkState {STANDING, WALKING}
 }

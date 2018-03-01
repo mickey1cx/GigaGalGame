@@ -32,7 +32,6 @@ public class Constants {
     public static final float GIGAGAL_WALK_DURATION = 0.25f;
 
     public static final Vector2 GIGAGAL_EYE_POSITION = new Vector2(16, 24);
-
     public static final float GIGAGAL_EYE_HEIGHT = 15.0f;
 
     public static final float GIGAGAL_SPEED = 64;
@@ -47,5 +46,8 @@ public class Constants {
     public static final int PLATFORM_EDGE = 8;
 
     public static final float CHASE_CAM_SPEED = 100.0f;
+
+    public static final String ENEMY = "enemy";
+    public static final Vector2 ENEMY_CENTER = new Vector2(14, 22);
 
 }
