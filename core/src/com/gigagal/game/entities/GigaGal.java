@@ -5,15 +5,19 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.gigagal.game.Level;
 import com.gigagal.game.utils.Assets;
 import com.gigagal.game.utils.Constants;
+import com.gigagal.game.utils.Enums;
 import com.gigagal.game.utils.Enums.Direction;
 import com.gigagal.game.utils.Enums.JumpState;
 import com.gigagal.game.utils.Enums.WalkState;
+import com.gigagal.game.utils.Utils;
 
 /**
  * Created by mickey.1cx on 25.02.2018.
@@ -28,8 +32,8 @@ public class GigaGal {
     private Direction direction;
     private JumpState jumpState;
     private WalkState walkState;
-    private Long jumpStartTime;
-    private Long walkStartTime;
+    private long jumpStartTime;
+    private long walkStartTime;
 
     private Level level;
 
@@ -68,7 +72,9 @@ public class GigaGal {
 
         if (jumpState != JumpState.JUMPING) {
 
-            jumpState = JumpState.FALLING;
+            if (jumpState != JumpState.RECOILING) {
+                jumpState = JumpState.FALLING;
+            }
 
             if (position.y - Constants.GIGAGAL_EYE_HEIGHT < 0) {
 //                jumpState = JumpState.GROUNDED;
@@ -80,6 +86,7 @@ public class GigaGal {
                     if (landedOnPlatform(platform)) {
                         jumpState = JumpState.GROUNDED;
                         velocity.y = 0;
+                        velocity.x = 0;
                         position.y = platform.top + Constants.GIGAGAL_EYE_HEIGHT;
                         break;
                     }
@@ -91,12 +98,15 @@ public class GigaGal {
 
         Input input = Gdx.input;
 
-        if (input.isKeyPressed(Keys.LEFT)) {
-            moveLeft(delta);
-        } else if (input.isKeyPressed(Keys.RIGHT)) {
-            moveRight(delta);
-        } else {
-            walkState = WalkState.STANDING;
+        if (jumpState != JumpState.RECOILING) {
+
+            if (input.isKeyPressed(Keys.LEFT)) {
+                moveLeft(delta);
+            } else if (input.isKeyPressed(Keys.RIGHT)) {
+                moveRight(delta);
+            } else {
+                walkState = WalkState.STANDING;
+            }
         }
 
         if (input.isKeyPressed(Keys.Z)) {
@@ -190,14 +200,15 @@ public class GigaGal {
 
     }
 
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, ShapeRenderer debugShapes) {
 
         TextureRegion player;
 
         float walkTime = 0;
 
         if (jumpState == JumpState.GROUNDED && walkState == WalkState.WALKING) {
-            walkTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - walkStartTime);
+            //walkTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - walkStartTime);
+            walkTime = Utils.secondsSince(walkStartTime);
         }
 
         if (direction == Direction.RIGHT) {
@@ -215,18 +226,14 @@ public class GigaGal {
                     : Assets.instance.gigaGalAssets.walkingLeftAnimation.getKeyFrame(walkTime);
         }
 
-        batch.draw(player.getTexture(),
+        Utils.drawTextureRegion(batch, player,
                 position.x - Constants.GIGAGAL_EYE_POSITION.x,
-                position.y - Constants.GIGAGAL_EYE_POSITION.y,
-                0, 0,
-                player.getRegionWidth(),
-                player.getRegionHeight(),
-                1,1,0,
-                player.getRegionX(),
-                player.getRegionY(),
-                player.getRegionWidth(),
-                player.getRegionHeight(),
-                false, false);
+                position.y - Constants.GIGAGAL_EYE_POSITION.y);
+
+        debugShapes.rect(
+                position.x  - Constants.GIGAGAL_STANCE_WIDTH / 2,
+                position.y - Constants.GIGAGAL_HEIGHT / 2,
+                Constants.GIGAGAL_STANCE_WIDTH, Constants.GIGAGAL_HEIGHT);
 
     }
 
@@ -234,4 +241,19 @@ public class GigaGal {
         return position;
     }
 
+    public Rectangle getCollider() {
+
+        return new Rectangle(
+                position.x  - Constants.GIGAGAL_STANCE_WIDTH / 2,
+                position.y - Constants.GIGAGAL_HEIGHT / 2,
+                Constants.GIGAGAL_STANCE_WIDTH, Constants.GIGAGAL_HEIGHT);
+    }
+
+    public void applyKnockback(Direction knockbackDirection) {
+
+        Vector2 knockbackVelocity = Constants.KNOCK_BACK_VELOCITY;
+        velocity.y += knockbackVelocity.y;
+        velocity.x += (knockbackDirection == Direction.RIGHT) ? knockbackVelocity.x : -knockbackVelocity.x;
+        jumpState = JumpState.RECOILING;
+    }
 }

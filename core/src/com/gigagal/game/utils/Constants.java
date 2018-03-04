@@ -37,7 +37,7 @@ public class Constants {
     public static final float GIGAGAL_SPEED = 64;
     public static final float GIGAGAL_JUMP_SPEED = 128;
     public static final float GIGAGAL_JUMP_DURATION = 0.3f;
-
+    public static final float GIGAGAL_HEIGHT = 23.0f;
     public static final float GIGAGAL_STANCE_WIDTH = 6.0f;
 
     public static final float GRAVITY = 1000.0f;
@@ -49,5 +49,12 @@ public class Constants {
 
     public static final String ENEMY = "enemy";
     public static final Vector2 ENEMY_CENTER = new Vector2(14, 22);
+    public static final float ENEMY_MOVEMENT_SPEED = 10.0f;
+
+    public static final float ENEMY_BOB_AMPLITUDE = 2.0f;
+    public static final float ENEMY_BOB_PERIOD = 3.0f;
+    public static final float ENEMY_RADIUS = 15.0f;
+
+    public static Vector2 KNOCK_BACK_VELOCITY = new Vector2(200, 200);
 
 }

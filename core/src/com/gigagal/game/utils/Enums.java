@@ -13,6 +13,7 @@ public class Enums {
     public enum JumpState {
         JUMPING,
         FALLING,
+        RECOILING,
         GROUNDED
     }
 

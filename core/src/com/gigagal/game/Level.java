@@ -1,6 +1,9 @@
 package com.gigagal.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -8,6 +11,9 @@ import com.gigagal.game.entities.Enemy;
 import com.gigagal.game.entities.GigaGal;
 import com.gigagal.game.entities.Platform;
 import com.gigagal.game.utils.Assets;
+import com.gigagal.game.utils.Constants;
+import com.gigagal.game.utils.Enums;
+import com.gigagal.game.utils.Enums.Direction;
 
 /**
  * Created by mickey.1cx on 25.02.2018.
@@ -54,24 +60,35 @@ public class Level {
     public void update(float delta) {
 
         gigaGal.update(delta);
+        Rectangle gigagalCollider = gigaGal.getCollider();
 
         for (Enemy enemy: enemies) {
             enemy.update(delta);
+
+            if (gigagalCollider.overlaps(enemy.getCollider())) {
+
+                Direction knockbackDirection = (gigaGal.getPosition().x > enemy.getPosition().x) ?
+                        Direction.RIGHT : Direction.LEFT;
+
+                gigaGal.applyKnockback(knockbackDirection);
+            }
+
         }
 
     }
 
-    public void render(SpriteBatch batch) {
+
+    public void render(SpriteBatch batch, ShapeRenderer debugShapes) {
 
         for (Platform platform : platforms) {
             platform.render(batch);
         }
 
         for (Enemy enemy: enemies) {
-            enemy.render(batch);
+            enemy.render(batch, debugShapes);
         }
 
-        gigaGal.render(batch);
+        gigaGal.render(batch, debugShapes);
 
     }
 
