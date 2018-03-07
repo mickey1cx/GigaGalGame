@@ -1,18 +1,17 @@
 package com.gigagal.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.gigagal.game.entities.Bullet;
 import com.gigagal.game.entities.Enemy;
 import com.gigagal.game.entities.GigaGal;
 import com.gigagal.game.entities.Platform;
-import com.gigagal.game.utils.Assets;
-import com.gigagal.game.utils.Constants;
-import com.gigagal.game.utils.Enums;
 import com.gigagal.game.utils.Enums.Direction;
 
 /**
@@ -21,13 +20,17 @@ import com.gigagal.game.utils.Enums.Direction;
 
 public class Level {
 
+    private Viewport viewport;
+
     private GigaGal gigaGal;
     private Array<Platform> platforms;
 
     private DelayedRemovalArray<Enemy> enemies;
+    DelayedRemovalArray<Bullet> bullets;
 
-    public Level() {
+    public Level(Viewport viewport) {
 
+        this.viewport = viewport;
         initDebugLevel();
 
     }
@@ -36,6 +39,7 @@ public class Level {
 
         platforms = new Array<Platform>();
         enemies = new DelayedRemovalArray<Enemy>();
+        bullets = new DelayedRemovalArray<Bullet>();
 
         platforms.add(new Platform(15, 100, 30, 20));
 
@@ -62,7 +66,23 @@ public class Level {
         gigaGal.update(delta);
         Rectangle gigagalCollider = gigaGal.getCollider();
 
+        bullets.begin();
+        for (Bullet bullet : bullets) {
+            bullet.update(delta);
+            if (!bullet.active) {
+                bullets.removeValue(bullet, false);
+            }
+        }
+        bullets.end();
+
+        enemies.begin();
         for (Enemy enemy: enemies) {
+
+            if (!enemy.active) {
+                enemies.removeValue(enemy, false);
+                continue;
+            }
+
             enemy.update(delta);
 
             if (gigagalCollider.overlaps(enemy.getCollider())) {
@@ -74,6 +94,8 @@ public class Level {
             }
 
         }
+        enemies.end();
+
 
     }
 
@@ -90,6 +112,10 @@ public class Level {
 
         gigaGal.render(batch, debugShapes);
 
+        for (Bullet bullet: bullets) {
+            bullet.render(batch);
+        }
+
     }
 
     public GigaGal getGigaGal() {
@@ -100,4 +126,17 @@ public class Level {
         return platforms;
     }
 
+    public void addBullet(Vector2 bulletPosition, Direction direction) {
+
+        bullets.add(new Bullet(this, bulletPosition, direction));
+
+    }
+
+    public Viewport getViewport() {
+        return viewport;
+    }
+
+    public DelayedRemovalArray<Enemy> getEnemies() {
+        return enemies;
+    }
 }

@@ -109,6 +109,10 @@ public class GigaGal {
             }
         }
 
+        if (input.isKeyJustPressed(Keys.X)) {
+            makeShoot();
+        }
+
         if (input.isKeyPressed(Keys.Z)) {
 
             switch (jumpState) {
@@ -124,6 +128,15 @@ public class GigaGal {
         } else {
             endJump();
         }
+
+    }
+
+    private void makeShoot() {
+
+        Vector2 bulletPosition = new Vector2(position);
+        bulletPosition.x += (direction == Direction.RIGHT) ? Constants.GIGAGAL_CANNON.x : -Constants.GIGAGAL_CANNON.x;
+        bulletPosition.y += Constants.GIGAGAL_CANNON.y;
+        level.addBullet(bulletPosition, direction);
 
     }
 

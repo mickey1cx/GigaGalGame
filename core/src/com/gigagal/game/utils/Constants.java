@@ -39,6 +39,7 @@ public class Constants {
     public static final float GIGAGAL_JUMP_DURATION = 0.3f;
     public static final float GIGAGAL_HEIGHT = 23.0f;
     public static final float GIGAGAL_STANCE_WIDTH = 6.0f;
+    public static final Vector2 GIGAGAL_CANNON = new Vector2(12, -7);
 
     public static final float GRAVITY = 1000.0f;
 
@@ -47,7 +48,10 @@ public class Constants {
 
     public static final float CHASE_CAM_SPEED = 100.0f;
 
+    //enemy
     public static final String ENEMY = "enemy";
+    public static final int ENEMY_HEALTH = 5;
+    public static final float ENEMY_HIT_RADIUS = 13.0f;
     public static final Vector2 ENEMY_CENTER = new Vector2(14, 22);
     public static final float ENEMY_MOVEMENT_SPEED = 10.0f;
 
@@ -56,5 +60,19 @@ public class Constants {
     public static final float ENEMY_RADIUS = 15.0f;
 
     public static Vector2 KNOCK_BACK_VELOCITY = new Vector2(200, 200);
+
+    //bullets
+    public static final String BULLET_SPRITE = "bullet";
+    public static final Vector2 BULLET_CENTER = new Vector2(3, 2);
+    public static final float BULLET_SPEED = 150.0f;
+
+    public static final String EXPLOSION_LARGE = "explosion-large";
+    public static final String EXPLOSION_MEDIUM = "explosion-medium";
+    public static final String EXPLOSION_SMALL = "explosion-small";
+    public static final Vector2 EXPLOSION_CENTER = new Vector2(8, 8);
+    public static final float EXPLOSION_DURATION = 0.5f;
+
+    public static final String POWERUP_SPRITE = "powerup";
+    public static final Vector2 POWERUP_CENTER = new Vector2(7, 5);
 
 }

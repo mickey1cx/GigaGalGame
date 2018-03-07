@@ -23,14 +23,21 @@ public class Enemy {
     Vector2 position;
     Direction direction;
 
+    private int health;
+
     final long startTime;
+
+    public boolean active;
 
     public Enemy(Platform platform) {
 
         this.platform = platform;
-        position = new Vector2(platform.left, platform.top);
+        position = new Vector2(platform.left, platform.top + Constants.ENEMY_CENTER.y);
         direction = Direction.RIGHT;
         startTime = TimeUtils.nanoTime();
+
+        health = Constants.ENEMY_HEALTH;
+        active = true;
 
     }
 
@@ -50,7 +57,7 @@ public class Enemy {
 
         float elapsed = Utils.secondsSince(startTime);
         float bobAmplitude = 1 + MathUtils.sin(MathUtils.PI2 * elapsed / Constants.ENEMY_BOB_PERIOD);
-        position.y = platform.top + bobAmplitude * Constants.ENEMY_BOB_AMPLITUDE;
+        position.y = platform.top + Constants.ENEMY_CENTER.y + bobAmplitude * Constants.ENEMY_BOB_AMPLITUDE;
 
     }
 
@@ -58,12 +65,11 @@ public class Enemy {
 
         TextureRegion sprite = Assets.instance.enemyAssets.enemy;
 
-        Utils.drawTextureRegion(batch, sprite,
-                position.x - Constants.ENEMY_CENTER.x, position.y);
+        Utils.drawTextureRegion(batch, sprite,position, Constants.ENEMY_CENTER);
 
         debugShapes.rect(
                 position.x - Constants.ENEMY_CENTER.x,
-                position.y,
+                position.y - Constants.ENEMY_CENTER.y,
                 Constants.ENEMY_RADIUS * 2, Constants.ENEMY_RADIUS * 2);
 
     }
@@ -72,12 +78,21 @@ public class Enemy {
 
         return new Rectangle(
                 position.x - Constants.ENEMY_CENTER.x,
-                position.y,
+                position.y - Constants.ENEMY_CENTER.y,
                 Constants.ENEMY_RADIUS * 2, Constants.ENEMY_RADIUS * 2);
 
     }
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public void hit() {
+
+        health--;
+        if (health == 0) {
+            active = false;
+        }
+
     }
 }

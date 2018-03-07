@@ -24,6 +24,9 @@ public class Assets implements Disposable, AssetErrorListener {
     public GigaGalAssets gigaGalAssets;
     public PlatformAssets platformAssets;
     public EnemyAssets enemyAssets;
+    public BulletAssets bulletAssets;
+    public ExplosionAssets explosionAssets;
+    public PowerupAssets powerupAssets;
 
     private AssetManager assetManager;
 
@@ -42,6 +45,10 @@ public class Assets implements Disposable, AssetErrorListener {
         gigaGalAssets = new GigaGalAssets(atlas);
         platformAssets = new PlatformAssets(atlas);
         enemyAssets = new EnemyAssets(atlas);
+        bulletAssets = new BulletAssets(atlas);
+        powerupAssets = new PowerupAssets(atlas);
+        explosionAssets = new ExplosionAssets(atlas);
+
     }
 
 
@@ -116,5 +123,44 @@ public class Assets implements Disposable, AssetErrorListener {
         }
 
 
+    }
+
+    public class BulletAssets {
+
+        public final AtlasRegion bullet;
+
+        public BulletAssets(TextureAtlas atlas) {
+
+            bullet = atlas.findRegion(Constants.BULLET_SPRITE);
+
+        }
+
+    }
+
+    public class ExplosionAssets {
+
+        public final Animation<AtlasRegion> explosion;
+
+        public ExplosionAssets(TextureAtlas atlas) {
+
+            Array<AtlasRegion> explosionFrames = new Array<AtlasRegion>();
+            explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_LARGE));
+            explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_MEDIUM));
+            explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_SMALL));
+            explosion = new Animation<AtlasRegion>(1.0f, explosionFrames, Animation.PlayMode.NORMAL);
+
+        }
+
+    }
+
+    public class PowerupAssets {
+
+        public final AtlasRegion powerUp;
+
+        public PowerupAssets(TextureAtlas atlas) {
+
+            powerUp = atlas.findRegion(Constants.POWERUP_SPRITE);
+
+        }
     }
 }
