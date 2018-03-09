@@ -12,7 +12,7 @@ public class Constants {
 
     public static final Color BACKGROUND_COLOR = Color.SKY;
 
-    public static final float WORLD_SIZE = 128.0f;
+    public static final float WORLD_SIZE = 160.0f;
 
     public static final float KILL_HEIGHT = -100.0f;
 
@@ -70,9 +70,12 @@ public class Constants {
     public static final String EXPLOSION_MEDIUM = "explosion-medium";
     public static final String EXPLOSION_SMALL = "explosion-small";
     public static final Vector2 EXPLOSION_CENTER = new Vector2(8, 8);
-    public static final float EXPLOSION_DURATION = 0.5f;
+    public static final float EXPLOSION_DURATION = 0.1f;
 
     public static final String POWERUP_SPRITE = "powerup";
     public static final Vector2 POWERUP_CENTER = new Vector2(7, 5);
+
+    public static final int GIGAGAL_START_AMMO = 10;
+    public static final int POWERUP_AMMO = 10;
 
 }

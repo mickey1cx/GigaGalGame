@@ -144,10 +144,12 @@ public class Assets implements Disposable, AssetErrorListener {
         public ExplosionAssets(TextureAtlas atlas) {
 
             Array<AtlasRegion> explosionFrames = new Array<AtlasRegion>();
+            explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_SMALL));
+            explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_MEDIUM));
             explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_LARGE));
             explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_MEDIUM));
             explosionFrames.add(atlas.findRegion(Constants.EXPLOSION_SMALL));
-            explosion = new Animation<AtlasRegion>(1.0f, explosionFrames, Animation.PlayMode.NORMAL);
+            explosion = new Animation<AtlasRegion>(Constants.EXPLOSION_DURATION, explosionFrames, Animation.PlayMode.NORMAL);
 
         }
 

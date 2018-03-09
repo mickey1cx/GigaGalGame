@@ -10,8 +10,12 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gigagal.game.entities.Bullet;
 import com.gigagal.game.entities.Enemy;
+import com.gigagal.game.entities.Explosion;
 import com.gigagal.game.entities.GigaGal;
 import com.gigagal.game.entities.Platform;
+import com.gigagal.game.entities.PowerUp;
+import com.gigagal.game.utils.Constants;
+import com.gigagal.game.utils.Enums;
 import com.gigagal.game.utils.Enums.Direction;
 
 /**
@@ -27,6 +31,8 @@ public class Level {
 
     private DelayedRemovalArray<Enemy> enemies;
     DelayedRemovalArray<Bullet> bullets;
+    private DelayedRemovalArray<Explosion> explosions;
+    private DelayedRemovalArray<PowerUp> powerUps;
 
     public Level(Viewport viewport) {
 
@@ -40,6 +46,8 @@ public class Level {
         platforms = new Array<Platform>();
         enemies = new DelayedRemovalArray<Enemy>();
         bullets = new DelayedRemovalArray<Bullet>();
+        explosions = new DelayedRemovalArray<Explosion>();
+        powerUps = new DelayedRemovalArray<PowerUp>();
 
         platforms.add(new Platform(15, 100, 30, 20));
 
@@ -59,6 +67,8 @@ public class Level {
 
         gigaGal = new GigaGal(this, new Vector2(15, 40));
 
+        powerUps.add(new PowerUp(new Vector2(30, 106)));
+
     }
 
     public void update(float delta) {
@@ -75,11 +85,45 @@ public class Level {
         }
         bullets.end();
 
+        updateEnemies(delta, gigagalCollider);
+        updatePowerUps(delta, gigagalCollider);
+
+        explosions.begin();
+        for (Explosion explosion :
+                explosions) {
+            if (explosion.isFinished()) {
+                explosions.removeValue(explosion, false);
+            }
+        }
+        explosions.end();
+
+    }
+
+    private void updatePowerUps(float delta, Rectangle gigagalCollider) {
+
+        powerUps.begin();
+        for (PowerUp powerup :
+                powerUps) {
+
+            if (gigagalCollider.overlaps(powerup.getCollider())) {
+
+                gigaGal.increaseAmmo(Constants.POWERUP_AMMO);
+                powerUps.removeValue(powerup, false);
+
+            }
+
+        }
+        powerUps.end();
+    }
+
+    private void updateEnemies(float delta, Rectangle gigagalCollider) {
+
         enemies.begin();
         for (Enemy enemy: enemies) {
 
             if (!enemy.active) {
                 enemies.removeValue(enemy, false);
+                spawnExplosion(enemy.getPosition());
                 continue;
             }
 
@@ -96,7 +140,6 @@ public class Level {
         }
         enemies.end();
 
-
     }
 
 
@@ -110,10 +153,21 @@ public class Level {
             enemy.render(batch, debugShapes);
         }
 
+        for (PowerUp powerup :
+                powerUps) {
+            powerup.render(batch);
+
+        }
+
         gigaGal.render(batch, debugShapes);
 
         for (Bullet bullet: bullets) {
             bullet.render(batch);
+        }
+
+        for (Explosion explosion :
+                explosions) {
+            explosion.render(batch);
         }
 
     }
@@ -132,11 +186,19 @@ public class Level {
 
     }
 
+    public DelayedRemovalArray<PowerUp> getPowerUps() {
+        return powerUps;
+    }
+
     public Viewport getViewport() {
         return viewport;
     }
 
     public DelayedRemovalArray<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public void spawnExplosion(Vector2 position) {
+        explosions.add(new Explosion(position));
     }
 }

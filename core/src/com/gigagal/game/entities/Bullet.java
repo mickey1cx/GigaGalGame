@@ -49,6 +49,7 @@ public class Bullet {
 
             if (dx * dx + dy * dy < Constants.ENEMY_HIT_RADIUS * Constants.ENEMY_HIT_RADIUS) {
                 active = false;
+                level.spawnExplosion(position);
                 enemy.hit();
             }
 

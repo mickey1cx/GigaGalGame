@@ -38,6 +38,7 @@ public class GigaGal {
     private Level level;
 
     private Vector2 startPosition;
+    private int ammoCounter;
 
     public GigaGal(Level level, Vector2 startPosition) {
 
@@ -56,6 +57,7 @@ public class GigaGal {
         walkState = WalkState.STANDING;
         velocity = new Vector2();
         lastPosition = new Vector2(position);
+        ammoCounter = Constants.GIGAGAL_START_AMMO;
 
     }
 
@@ -133,10 +135,15 @@ public class GigaGal {
 
     private void makeShoot() {
 
+        if (ammoCounter == 0) {
+            return;
+        }
+
         Vector2 bulletPosition = new Vector2(position);
         bulletPosition.x += (direction == Direction.RIGHT) ? Constants.GIGAGAL_CANNON.x : -Constants.GIGAGAL_CANNON.x;
         bulletPosition.y += Constants.GIGAGAL_CANNON.y;
         level.addBullet(bulletPosition, direction);
+        ammoCounter--;
 
     }
 
@@ -243,10 +250,10 @@ public class GigaGal {
                 position.x - Constants.GIGAGAL_EYE_POSITION.x,
                 position.y - Constants.GIGAGAL_EYE_POSITION.y);
 
-        debugShapes.rect(
-                position.x  - Constants.GIGAGAL_STANCE_WIDTH / 2,
-                position.y - Constants.GIGAGAL_HEIGHT / 2,
-                Constants.GIGAGAL_STANCE_WIDTH, Constants.GIGAGAL_HEIGHT);
+//        debugShapes.rect(
+//                position.x  - Constants.GIGAGAL_STANCE_WIDTH / 2,
+//                position.y - Constants.GIGAGAL_HEIGHT / 2,
+//                Constants.GIGAGAL_STANCE_WIDTH, Constants.GIGAGAL_HEIGHT);
 
     }
 
@@ -268,5 +275,11 @@ public class GigaGal {
         velocity.y += knockbackVelocity.y;
         velocity.x += (knockbackDirection == Direction.RIGHT) ? knockbackVelocity.x : -knockbackVelocity.x;
         jumpState = JumpState.RECOILING;
+    }
+
+    public void increaseAmmo(int powerupAmmo) {
+
+        ammoCounter += powerupAmmo;
+
     }
 }

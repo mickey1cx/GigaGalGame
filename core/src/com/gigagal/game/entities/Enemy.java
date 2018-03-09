@@ -67,10 +67,10 @@ public class Enemy {
 
         Utils.drawTextureRegion(batch, sprite,position, Constants.ENEMY_CENTER);
 
-        debugShapes.rect(
-                position.x - Constants.ENEMY_CENTER.x,
-                position.y - Constants.ENEMY_CENTER.y,
-                Constants.ENEMY_RADIUS * 2, Constants.ENEMY_RADIUS * 2);
+//        debugShapes.rect(
+//                position.x - Constants.ENEMY_CENTER.x,
+//                position.y - Constants.ENEMY_CENTER.y,
+//                Constants.ENEMY_RADIUS * 2, Constants.ENEMY_RADIUS * 2);
 
     }
 
