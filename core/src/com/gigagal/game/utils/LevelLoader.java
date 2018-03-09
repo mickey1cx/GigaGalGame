@@ -10,6 +10,7 @@ import com.gigagal.game.entities.Enemy;
 import com.gigagal.game.entities.ExitPortal;
 import com.gigagal.game.entities.GigaGal;
 import com.gigagal.game.entities.Platform;
+import com.gigagal.game.entities.PowerUp;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -72,6 +73,9 @@ public class LevelLoader {
             } else if (identifier != null && identifier.equals(Constants.EXIT_PORTAL_TAG)) {
                 level.setExitPortal(new ExitPortal(new Vector2(x + Constants.EXIT_PORTAL_CENTER.x,
                         y + Constants.EXIT_PORTAL_CENTER.y)));
+            }  else if (identifier != null && identifier.equals(Constants.POWERUP_SPRITE)) {
+                level.getPowerUps().add(new PowerUp(new Vector2(x + Constants.POWERUP_CENTER.x,
+                        y + Constants.POWERUP_CENTER.y)));
             }
 
         }
