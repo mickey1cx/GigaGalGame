@@ -28,7 +28,7 @@ public class Assets implements Disposable, AssetErrorListener {
     public ExplosionAssets explosionAssets;
     public PowerupAssets powerupAssets;
     public PortalAssets portalAssets;
-
+    public TouchTargets touchTargets;
 
     private AssetManager assetManager;
 
@@ -51,6 +51,7 @@ public class Assets implements Disposable, AssetErrorListener {
         powerupAssets = new PowerupAssets(atlas);
         explosionAssets = new ExplosionAssets(atlas);
         portalAssets = new PortalAssets(atlas);
+        touchTargets = new TouchTargets(atlas);
 
     }
 
@@ -183,6 +184,23 @@ public class Assets implements Disposable, AssetErrorListener {
             frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_5));
             frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_6));
             exitPortal = new Animation<AtlasRegion>(Constants.EXIT_PORTAL_FRAME_DURATION, frames, Animation.PlayMode.LOOP);
+
+        }
+    }
+
+    public class TouchTargets {
+
+        public final AtlasRegion buttonLeft;
+        public final AtlasRegion buttonRight;
+        public final AtlasRegion buttonJump;
+        public final AtlasRegion buttonFire;
+
+        public TouchTargets(TextureAtlas atlas) {
+
+            buttonLeft = atlas.findRegion(Constants.MOVE_LEFT_BUTTON);
+            buttonRight = atlas.findRegion(Constants.MOVE_RIGHT_BUTTON);
+            buttonJump = atlas.findRegion(Constants.JUMP_BUTTON);
+            buttonFire = atlas.findRegion(Constants.SHOOT_BUTTON);
 
         }
     }

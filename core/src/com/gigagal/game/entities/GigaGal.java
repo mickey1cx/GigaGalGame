@@ -39,6 +39,9 @@ public class GigaGal {
 
     private Vector2 startPosition;
     private int ammoCounter;
+    public boolean jumpButtonPressed;
+    public boolean leftButtonPressed;
+    public boolean rightButtonPressed;
 
     public GigaGal(Level level, Vector2 startPosition) {
 
@@ -58,6 +61,8 @@ public class GigaGal {
         velocity = new Vector2();
         lastPosition = new Vector2(position);
         ammoCounter = Constants.GIGAGAL_START_AMMO;
+
+        jumpButtonPressed = false;
 
     }
 
@@ -102,9 +107,9 @@ public class GigaGal {
 
         if (jumpState != JumpState.RECOILING) {
 
-            if (input.isKeyPressed(Keys.LEFT)) {
+            if (leftButtonPressed || input.isKeyPressed(Keys.LEFT)) {
                 moveLeft(delta);
-            } else if (input.isKeyPressed(Keys.RIGHT)) {
+            } else if (rightButtonPressed || input.isKeyPressed(Keys.RIGHT)) {
                 moveRight(delta);
             } else {
                 walkState = WalkState.STANDING;
@@ -115,7 +120,7 @@ public class GigaGal {
             makeShoot();
         }
 
-        if (input.isKeyPressed(Keys.Z)) {
+        if (jumpButtonPressed || input.isKeyPressed(Keys.Z)) {
 
             switch (jumpState) {
 
@@ -280,6 +285,22 @@ public class GigaGal {
     public void increaseAmmo(int powerupAmmo) {
 
         ammoCounter += powerupAmmo;
+
+    }
+
+    public int getAmmoCounter() {
+        return ammoCounter;
+    }
+
+    public void shoot() {
+
+        makeShoot();
+
+    }
+
+    public void jump() {
+
+
 
     }
 }

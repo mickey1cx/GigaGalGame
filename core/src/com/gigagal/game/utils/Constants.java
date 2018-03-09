@@ -106,4 +106,24 @@ public class Constants {
     public static final String EXIT_PORTAL_TAG = "exit-portal";
     public static final float EXIT_PORTAL_FRAME_DURATION = 0.25f;
 
+    public static final float HUD_VIEWPORT_SIZE = 480;
+
+    public static final float HUD_MARGIN = 20;
+    public static final String HUD_AMMO_LABEL = "Ammo: ";
+    public static final String HUD_SCORE_LABEL = "Score: ";
+
+    // Scoring
+    public static final int ENEMY_KILL_SCORE = 100;
+    public static final int ENEMY_HIT_SCORE = 25;
+    public static final int POWERUP_SCORE = 50;
+
+    // Onscreen Controls
+    public static final float ONSCREEN_CONTROLS_VIEWPORT_SIZE = 200;
+    public static final String MOVE_LEFT_BUTTON = "button-move-left";
+    public static final String MOVE_RIGHT_BUTTON = "button-move-right";
+    public static final String SHOOT_BUTTON = "button-shoot";
+    public static final String JUMP_BUTTON = "button-jump";
+    public static final Vector2 BUTTON_CENTER = new Vector2(15, 15);
+    public static final float BUTTON_RADIUS = 32;
+
 }

@@ -37,6 +37,9 @@ public class Level {
     DelayedRemovalArray<Bullet> bullets;
     private DelayedRemovalArray<Explosion> explosions;
     private DelayedRemovalArray<PowerUp> powerUps;
+    
+    int levelScore;
+    int levelLives;
 
     public Level(Viewport viewport) {
 
@@ -80,6 +83,8 @@ public class Level {
         bullets = new DelayedRemovalArray<Bullet>();
         explosions = new DelayedRemovalArray<Explosion>();
         powerUps = new DelayedRemovalArray<PowerUp>();
+        levelScore = 0;
+        levelLives = 3;
 
     }
 
@@ -121,6 +126,7 @@ public class Level {
 
                 gigaGal.increaseAmmo(Constants.POWERUP_AMMO);
                 powerUps.removeValue(powerup, false);
+                levelScore += Constants.POWERUP_SCORE;
 
             }
 
@@ -136,6 +142,7 @@ public class Level {
             if (!enemy.active) {
                 enemies.removeValue(enemy, false);
                 spawnExplosion(enemy.getPosition());
+                levelScore += Constants.ENEMY_KILL_SCORE;
                 continue;
             }
 
@@ -234,5 +241,9 @@ public class Level {
 
     public void setExitPortal(ExitPortal portal) {
         this.exitPortal = portal;
+    }
+
+    public int getLevelScore() {
+        return levelScore;
     }
 }
