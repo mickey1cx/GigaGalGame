@@ -34,4 +34,8 @@ public class Platform {
 
     }
 
+    public float getTop() {
+        return top;
+    }
+
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gigagal.game.entities.Bullet;
 import com.gigagal.game.entities.Enemy;
+import com.gigagal.game.entities.ExitPortal;
 import com.gigagal.game.entities.Explosion;
 import com.gigagal.game.entities.GigaGal;
 import com.gigagal.game.entities.Platform;
@@ -17,6 +18,8 @@ import com.gigagal.game.entities.PowerUp;
 import com.gigagal.game.utils.Constants;
 import com.gigagal.game.utils.Enums;
 import com.gigagal.game.utils.Enums.Direction;
+
+import org.json.simple.JSONArray;
 
 /**
  * Created by mickey.1cx on 25.02.2018.
@@ -27,6 +30,7 @@ public class Level {
     private Viewport viewport;
 
     private GigaGal gigaGal;
+    private ExitPortal exitPortal;
     private Array<Platform> platforms;
 
     private DelayedRemovalArray<Enemy> enemies;
@@ -37,17 +41,15 @@ public class Level {
     public Level(Viewport viewport) {
 
         this.viewport = viewport;
-        initDebugLevel();
+
+        init();
+//        initDebugLevel();
 
     }
 
     private void initDebugLevel() {
 
-        platforms = new Array<Platform>();
-        enemies = new DelayedRemovalArray<Enemy>();
-        bullets = new DelayedRemovalArray<Bullet>();
-        explosions = new DelayedRemovalArray<Explosion>();
-        powerUps = new DelayedRemovalArray<PowerUp>();
+        init();
 
         platforms.add(new Platform(15, 100, 30, 20));
 
@@ -68,6 +70,16 @@ public class Level {
         gigaGal = new GigaGal(this, new Vector2(15, 40));
 
         powerUps.add(new PowerUp(new Vector2(30, 106)));
+
+    }
+
+    private void init() {
+
+        platforms = new Array<Platform>();
+        enemies = new DelayedRemovalArray<Enemy>();
+        bullets = new DelayedRemovalArray<Bullet>();
+        explosions = new DelayedRemovalArray<Explosion>();
+        powerUps = new DelayedRemovalArray<PowerUp>();
 
     }
 
@@ -159,6 +171,7 @@ public class Level {
 
         }
 
+        exitPortal.render(batch);
         gigaGal.render(batch, debugShapes);
 
         for (Bullet bullet: bullets) {
@@ -200,5 +213,26 @@ public class Level {
 
     public void spawnExplosion(Vector2 position) {
         explosions.add(new Explosion(position));
+    }
+
+
+    public void addEnemy(Enemy enemy) {
+        
+        enemies.add(enemy);
+        
+    }
+
+    public void setPlatforms(Array<Platform> platforms) {
+        this.platforms = platforms;
+    }
+
+    public void setGigagal(GigaGal gigagal) {
+
+        this.gigaGal = gigagal;
+
+    }
+
+    public void setExitPortal(ExitPortal portal) {
+        this.exitPortal = portal;
     }
 }

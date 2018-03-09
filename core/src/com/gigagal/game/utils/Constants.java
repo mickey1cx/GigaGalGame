@@ -78,4 +78,41 @@ public class Constants {
     public static final int GIGAGAL_START_AMMO = 10;
     public static final int POWERUP_AMMO = 10;
 
+    // Level Loading
+    public static final String LEVEL_DIR = "levels";
+    public static final String LEVEL_FILE_EXTENSION = "json";
+    public static final String LEVEL_COMPOSITE = "composite";
+    public static final String LEVEL_9PATCHES = "sImage9patchs";
+    public static final String LEVEL_IMAGES = "sImages";
+    public static final String LEVEL_ERROR_MESSAGE = "There was a problem loading the level.";
+    public static final String LEVEL_IMAGENAME_KEY = "imageName";
+    public static final String LEVEL_X_KEY = "x";
+    public static final String LEVEL_Y_KEY = "y";
+    public static final String LEVEL_WIDTH_KEY = "width";
+    public static final String LEVEL_HEIGHT_KEY = "height";
+    public static final String LEVEL_IDENTIFIER_KEY = "itemIdentifier";
+    public static final String LEVEL_ENEMY_TAG = "Enemy";
+
+    public static final String LEVEL_GIGAGAL_TAG = "standing-right";
+
+    // Exit Portal
+    // TODO: Note the constants we added for the exit portal frames
+    public static final String EXIT_PORTAL_SPRITE_1 = "exit-portal-1";
+    public static final String EXIT_PORTAL_SPRITE_2 = "exit-portal-2";
+    public static final String EXIT_PORTAL_SPRITE_3 = "exit-portal-3";
+    public static final String EXIT_PORTAL_SPRITE_4 = "exit-portal-4";
+    public static final String EXIT_PORTAL_SPRITE_5 = "exit-portal-5";
+    public static final String EXIT_PORTAL_SPRITE_6 = "exit-portal-6";
+    public static final Vector2 EXIT_PORTAL_CENTER = new Vector2(31, 31);
+    public static final String EXIT_PORTAL_TAG = "exit-portal";
+
+    // TODO: Add a constant for the exit portal frame duration
+    // A tenth of a second gives a nice animation
+    public static final float EXIT_PORTAL_FRAME_DURATION = 0.25f;
+
+    // TODO: Add a constant for the Exit portal's default location
+    // Something like (200, 200) is fine
+    public static final Vector2 EXIT_PORTAL_DEFAULT_POSITIOM = new Vector2(200, 200);
+
+
 }

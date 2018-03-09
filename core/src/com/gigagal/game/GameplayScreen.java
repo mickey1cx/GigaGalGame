@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gigagal.game.utils.Assets;
 import com.gigagal.game.utils.ChaseCam;
 import com.gigagal.game.utils.Constants;
+import com.gigagal.game.utils.LevelLoader;
 
 /**
  * Created by mickey.1cx on 25.02.2018.
@@ -40,7 +41,8 @@ public class GameplayScreen extends ScreenAdapter {
 
         viewport = new ExtendViewport(Constants.WORLD_SIZE, Constants.WORLD_SIZE);
 
-        level = new Level(viewport);
+        //level = new Level(viewport);
+        level = LevelLoader.load("level_01", viewport);
 
         cam = new ChaseCam(viewport.getCamera(), level.getGigaGal());
 

@@ -12,35 +12,31 @@ import com.gigagal.game.utils.Constants;
 import com.gigagal.game.utils.Utils;
 
 /**
- * Created by mickey.1cx on 08.03.2018.
+ * Created by mickey.1cx on 09.03.2018.
  */
 
-public class Explosion {
+public class ExitPortal {
 
-    private Vector2 position;
-    private long startTime;
-    private Animation<AtlasRegion> animation;
+    Vector2 position;
+    long startTime;
+    Animation<AtlasRegion> animation;
 
-    public Explosion(Vector2 position){
+    public ExitPortal(Vector2 position) {
 
         this.position = position;
         startTime = TimeUtils.nanoTime();
-        animation = Assets.instance.explosionAssets.explosion;
+        animation = Assets.instance.portalAssets.exitPortal;
 
     }
 
     public void render(SpriteBatch batch){
 
         float renderTime = Utils.secondsSince(startTime);
+
         TextureRegion sprite = animation.getKeyFrame(renderTime);
-        Utils.drawTextureRegion(batch, sprite, position, Constants.EXPLOSION_CENTER);
+        Utils.drawTextureRegion(batch, sprite, position, Constants.EXIT_PORTAL_CENTER);
 
     }
 
-    public boolean isFinished(){
-
-        return animation.isAnimationFinished(Utils.secondsSince(startTime));
-
-    }
 
 }

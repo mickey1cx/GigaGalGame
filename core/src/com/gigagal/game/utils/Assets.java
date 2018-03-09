@@ -27,6 +27,8 @@ public class Assets implements Disposable, AssetErrorListener {
     public BulletAssets bulletAssets;
     public ExplosionAssets explosionAssets;
     public PowerupAssets powerupAssets;
+    public PortalAssets portalAssets;
+
 
     private AssetManager assetManager;
 
@@ -48,6 +50,7 @@ public class Assets implements Disposable, AssetErrorListener {
         bulletAssets = new BulletAssets(atlas);
         powerupAssets = new PowerupAssets(atlas);
         explosionAssets = new ExplosionAssets(atlas);
+        portalAssets = new PortalAssets(atlas);
 
     }
 
@@ -162,6 +165,24 @@ public class Assets implements Disposable, AssetErrorListener {
         public PowerupAssets(TextureAtlas atlas) {
 
             powerUp = atlas.findRegion(Constants.POWERUP_SPRITE);
+
+        }
+    }
+
+    public class PortalAssets {
+
+        public final Animation<AtlasRegion> exitPortal;
+
+        public PortalAssets(TextureAtlas atlas) {
+
+            Array<AtlasRegion> frames = new Array<AtlasRegion>();
+            frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_1));
+            frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_2));
+            frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_3));
+            frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_4));
+            frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_5));
+            frames.add(atlas.findRegion(Constants.EXIT_PORTAL_SPRITE_6));
+            exitPortal = new Animation<AtlasRegion>(Constants.EXIT_PORTAL_FRAME_DURATION, frames, Animation.PlayMode.LOOP);
 
         }
     }
